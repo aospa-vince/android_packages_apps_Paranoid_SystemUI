@@ -61,6 +61,7 @@ import co.aospa.systemui.qs.tiles.DataSwitchTile;
 import co.aospa.systemui.qs.tiles.DcDimmingTile;
 import co.aospa.systemui.qs.tiles.HeadsUpTile;
 import co.aospa.systemui.qs.tiles.SoundTile;
+import co.aospa.systemui.qs.tiles.VolumeTile;
 import dagger.Lazy;
 
 @SysUISingleton
@@ -71,6 +72,7 @@ public class ParanoidQSFactoryImpl extends QSFactoryImpl {
     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
     private final Provider<DcDimmingTile> mDcDimmingTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
+    private final Provider<VolumeTile> mVolumeTileProvider;
 
     @Inject
     public ParanoidQSFactoryImpl(Lazy<QSHost> qsHostLazy,
@@ -109,7 +111,8 @@ public class ParanoidQSFactoryImpl extends QSFactoryImpl {
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<HeadsUpTile> headsUpTileProvider,
             Provider<DcDimmingTile> dcDimTileProvider,
-            Provider<SoundTile> soundTileProvider) {
+            Provider<SoundTile> soundTileProvider,
+            Provider<VolumeTile> volumeTileProvider) {
         super(qsHostLazy, customTileBuilderProvider, wifiTileProvider, internetTileProvider,
                 bluetoothTileProvider, cellularTileProvider, dndTileProvider,
                 colorInversionTileProvider, airplaneModeTileProvider, workModeTileProvider,
@@ -126,6 +129,7 @@ public class ParanoidQSFactoryImpl extends QSFactoryImpl {
         mHeadsUpTileProvider = headsUpTileProvider;
         mDcDimmingTileProvider = dcDimTileProvider;
         mSoundTileProvider = soundTileProvider;
+        mVolumeTileProvider = volumeTileProvider;
     }
 
     @Nullable
@@ -142,6 +146,8 @@ public class ParanoidQSFactoryImpl extends QSFactoryImpl {
                 return mDcDimmingTileProvider.get();
             case "sound":
                 return mSoundTileProvider.get();
+            case "volume_panel":
+                return mVolumeTileProvider.get();
             default:
                 return super.createTileInternal(tileSpec);
         }
